@@ -7,137 +7,131 @@ import { Manga, Comment } from '../models/manga.model';
 export class MangaService {
   private mangaData: Manga[] = [
     {
-      id: 'cosmic-wanderer',
-      title: 'Cosmic Wanderer',
-      author: 'AI Gen',
-      coverUrl: 'https://picsum.photos/seed/cosmic-cover/500/700',
-      description: 'A lone astronaut traverses forgotten galaxies, uncovering ancient secrets and confronting existential dread. A breathtaking journey through the vastness of space and the intricate depths of the self.',
-      categories: ['Sci-Fi', 'Adventure', 'Psychological'],
-      followers: 1250,
+      id: 'jujutsu-kaisen',
+      title: 'Jujutsu Kaisen',
+      author: 'Gege Akutami',
+      coverUrl: 'https://picsum.photos/seed/jujutsu-kaisen/500/700',
+      description: 'A boy swallows a cursed talisman—the finger of a demon—and becomes cursed himself. He enters a shaman\'s school to be able to locate the demon\'s other body parts and thus exorcise himself.',
+      categories: ['Action', 'Supernatural', 'Shonen'],
+      followers: 3520,
       chapters: [
         {
-          id: 'cw-ch1',
-          title: 'The Awakening',
+          id: 'jjk-ch1',
+          title: 'Ryomen Sukuna',
           chapterNumber: 1,
-          pages: Array.from({ length: 8 }, (_, i) => ({
-            id: `cw-ch1-p${i + 1}`,
-            pageNumber: i + 1,
-            imageUrl: `https://picsum.photos/seed/cw-ch1-p${i + 1}/800/1200`,
-          })),
-        },
-        {
-          id: 'cw-ch2',
-          title: 'Echoes of the Past',
-          chapterNumber: 2,
-          pages: Array.from({ length: 10 }, (_, i) => ({
-            id: `cw-ch2-p${i + 1}`,
-            pageNumber: i + 1,
-            imageUrl: `https://picsum.photos/seed/cw-ch2-p${i + 1}/800/1200`,
-          })),
-        },
-      ],
-      comments: [
-        { id: 'c1', username: 'Stargazer', timestamp: new Date(Date.now() - 86400000).toISOString(), text: 'This series is mind-bending! I love the art style.' },
-        { id: 'c2', username: 'SciFiFan_22', timestamp: new Date(Date.now() - 3600000).toISOString(), text: 'Just finished chapter 1, can\'t wait for more. The sense of isolation is palpable.' },
-      ]
-    },
-    {
-      id: 'cyberpunk-ronin',
-      title: 'Cyberpunk Ronin',
-      author: 'AI Gen',
-      coverUrl: 'https://picsum.photos/seed/cyber-cover/500/700',
-      description: 'In the neon-drenched, rain-slicked streets of Neo-Kyoto 2077, a disgraced cyborg samurai seeks redemption by protecting the innocent from the iron grip of corrupt megacorporations.',
-      categories: ['Cyberpunk', 'Action', 'Sci-Fi'],
-      followers: 2345,
-      chapters: [
-        {
-          id: 'cr-ch1',
-          title: 'Neon & Rust',
-          chapterNumber: 1,
-          pages: Array.from({ length: 12 }, (_, i) => ({
-            id: `cr-ch1-p${i + 1}`,
-            pageNumber: i + 1,
-            imageUrl: `https://picsum.photos/seed/cr-ch1-p${i + 1}/800/1200`,
-          })),
-        },
-        {
-          id: 'cr-ch2',
-          title: 'Ghosts in the Machine',
-          chapterNumber: 2,
-          pages: Array.from({ length: 9 }, (_, i) => ({
-            id: `cr-ch2-p${i + 1}`,
-            pageNumber: i + 1,
-            imageUrl: `https://picsum.photos/seed/cr-ch2-p${i + 1}/800/1200`,
-          })),
-        },
-        {
-          id: 'cr-ch3',
-          title: 'The Chrome Katana',
-          chapterNumber: 3,
           pages: Array.from({ length: 15 }, (_, i) => ({
-            id: `cr-ch3-p${i + 1}`,
+            id: `jjk-ch1-p${i + 1}`,
             pageNumber: i + 1,
-            imageUrl: `https://picsum.photos/seed/cr-ch3-p${i + 1}/800/1200`,
+            imageUrl: `https://picsum.photos/seed/jjk-ch1-p${i + 1}/800/1200`,
+          })),
+        },
+        {
+          id: 'jjk-ch2',
+          title: 'Secret Execution',
+          chapterNumber: 2,
+          pages: Array.from({ length: 12 }, (_, i) => ({
+            id: `jjk-ch2-p${i + 1}`,
+            pageNumber: i + 1,
+            imageUrl: `https://picsum.photos/seed/jjk-ch2-p${i + 1}/800/1200`,
           })),
         },
       ],
       comments: [
-         { id: 'c3', username: 'Neon_Blade', timestamp: new Date(Date.now() - 172800000).toISOString(), text: 'Absolutely love the gritty atmosphere of Neo-Kyoto. The action sequences are top-notch.' },
+        { id: 'c1', username: 'GojoFan', timestamp: new Date(Date.now() - 86400000).toISOString(), text: 'Gojo Satoru is the best character! The art is amazing.' },
+        { id: 'c2', username: 'CursedEnergyUser', timestamp: new Date(Date.now() - 3600000).toISOString(), text: 'Just started reading, Yuji is a great protagonist. Hooked already!' },
       ]
     },
     {
-      id: 'alchemists-apprentice',
-      title: 'The Alchemist\'s Apprentice',
-      author: 'AI Gen',
-      coverUrl: 'https://picsum.photos/seed/alchemy-cover/500/700',
-      description: 'A young, ambitious apprentice in a whimsical world of magic and steam-powered contraptions stumbles upon a forbidden alchemical formula that could reshape their reality, for better or worse.',
-      categories: ['Fantasy', 'Steampunk', 'Adventure'],
-      followers: 980,
+      id: 'one-piece',
+      title: 'One Piece',
+      author: 'Eiichiro Oda',
+      coverUrl: 'https://picsum.photos/seed/one-piece/500/700',
+      description: 'Follows the adventures of Monkey D. Luffy, a boy whose body gained the properties of rubber after unintentionally eating a Devil Fruit. With his crew of pirates, the Straw Hat Pirates, Luffy explores the Grand Line in search of the ultimate treasure known as "One Piece" in order to become the next Pirate King.',
+      categories: ['Adventure', 'Fantasy', 'Action', 'Shonen'],
+      followers: 5100,
       chapters: [
         {
-          id: 'aa-ch1',
-          title: 'The Forbidden Tome',
+          id: 'op-ch1',
+          title: 'Romance Dawn',
           chapterNumber: 1,
-          pages: Array.from({ length: 7 }, (_, i) => ({
-            id: `aa-ch1-p${i + 1}`,
+          pages: Array.from({ length: 20 }, (_, i) => ({
+            id: `op-ch1-p${i + 1}`,
             pageNumber: i + 1,
-            imageUrl: `https://picsum.photos/seed/aa-ch1-p${i + 1}/800/1200`,
+            imageUrl: `https://picsum.photos/seed/op-ch1-p${i + 1}/800/1200`,
+          })),
+        },
+        {
+          id: 'op-ch2',
+          title: 'The Man in the Straw Hat',
+          chapterNumber: 2,
+          pages: Array.from({ length: 18 }, (_, i) => ({
+            id: `op-ch2-p${i + 1}`,
+            pageNumber: i + 1,
+            imageUrl: `https://picsum.photos/seed/op-ch2-p${i + 1}/800/1200`,
           })),
         },
       ],
-      comments: [],
+      comments: [
+         { id: 'c3', username: 'PirateKing_Luffy', timestamp: new Date(Date.now() - 172800000).toISOString(), text: 'Over 1000 chapters and still peak fiction! Oda is a genius.' },
+      ]
     },
     {
-      id: 'shadow-syndicate',
-      title: 'Shadow Syndicate',
-      author: 'AI Gen',
-      coverUrl: 'https://picsum.photos/seed/shadow-cover/500/700',
-      description: 'A covert group of spies with extraordinary abilities works from the shadows to maintain a fragile global peace, navigating a world of intrigue, betrayal, and high-stakes espionage.',
-      categories: ['Spy', 'Action', 'Thriller'],
-      followers: 1876,
+      id: 'attack-on-titan',
+      title: 'Attack on Titan',
+      author: 'Hajime Isayama',
+      coverUrl: 'https://picsum.photos/seed/attack-on-titan/500/700',
+      description: 'In a world where humanity lives within cities surrounded by enormous walls that protect them from gigantic man-eating humanoids known as Titans, Eren Yeager vows to exterminate the Titans after they bring about the destruction of his hometown and the death of his mother.',
+      categories: ['Action', 'Dark Fantasy', 'Post-apocalyptic'],
+      followers: 4250,
       chapters: [
         {
-          id: 'ss-ch1',
-          title: 'Operation Nightingale',
+          id: 'aot-ch1',
+          title: 'To You, 2000 Years From Now',
           chapterNumber: 1,
-          pages: Array.from({ length: 11 }, (_, i) => ({
-            id: `ss-ch1-p${i + 1}`,
+          pages: Array.from({ length: 16 }, (_, i) => ({
+            id: `aot-ch1-p${i + 1}`,
             pageNumber: i + 1,
-            imageUrl: `https://picsum.photos/seed/ss-ch1-p${i + 1}/800/1200`,
+            imageUrl: `https://picsum.photos/seed/aot-ch1-p${i + 1}/800/1200`,
+          })),
+        },
+      ],
+      comments: [
+        { id: 'c4', username: 'SurveyCorpsScout', timestamp: new Date(Date.now() - 99400000).toISOString(), text: 'This story is a masterpiece of foreshadowing. Not for the faint of heart.' },
+      ],
+    },
+    {
+      id: 'spy-x-family',
+      title: 'Spy x Family',
+      author: 'Tatsuya Endo',
+      coverUrl: 'https://picsum.photos/seed/spy-x-family/500/700',
+      description: 'A spy on an undercover mission gets married and adopts a child as part of his cover. His wife and daughter have secrets of their own, and all three must strive to keep together.',
+      categories: ['Action', 'Comedy', 'Spy'],
+      followers: 2890,
+      chapters: [
+        {
+          id: 'sxf-ch1',
+          title: 'Mission: 1',
+          chapterNumber: 1,
+          pages: Array.from({ length: 14 }, (_, i) => ({
+            id: `sxf-ch1-p${i + 1}`,
+            pageNumber: i + 1,
+            imageUrl: `https://picsum.photos/seed/sxf-ch1-p${i + 1}/800/1200`,
           })),
         },
          {
-          id: 'ss-ch2',
-          title: 'The Crimson Dossier',
+          id: 'sxf-ch2',
+          title: 'Mission: 2',
           chapterNumber: 2,
-          pages: Array.from({ length: 14 }, (_, i) => ({
-            id: `ss-ch2-p${i + 1}`,
+          pages: Array.from({ length: 17 }, (_, i) => ({
+            id: `sxf-ch2-p${i + 1}`,
             pageNumber: i + 1,
-            imageUrl: `https://picsum.photos/seed/ss-ch2-p${i + 1}/800/1200`,
+            imageUrl: `https://picsum.photos/seed/sxf-ch2-p${i + 1}/800/1200`,
           })),
         },
       ],
-      comments: [],
+      comments: [
+        { id: 'c5', username: 'AnyaPeanuts', timestamp: new Date(Date.now() - 43200000).toISOString(), text: 'Anya is the cutest! So wholesome and hilarious at the same time. Waku waku!' },
+      ],
     },
   ];
 
