@@ -1,4 +1,29 @@
 <section class="animate-fade-in">
+  @if (readHistory().length > 0) {
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold text-white mb-6 border-l-4 border-indigo-500 pl-4">Continue Reading</h2>
+      <div class="flex overflow-x-auto space-x-6 pb-4 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8" style="scrollbar-width: thin;">
+        @for(item of readHistory(); track item.mangaId + item.chapterId) {
+          <div (click)="selectHistoryItem(item)" class="group cursor-pointer flex-shrink-0 w-48 bg-gray-800 rounded-lg shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
+            <div class="relative">
+              <img [ngSrc]="item.coverUrl" [alt]="item.mangaTitle" width="500" height="700" class="w-full h-auto aspect-[5/7] object-cover rounded-t-lg transition-transform duration-300 group-hover:scale-105" />
+              <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 rounded-t-lg"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-2 bg-black/50 backdrop-blur-sm">
+                <div class="w-full bg-gray-600/50 rounded-full h-1.5">
+                  <div class="bg-indigo-400 h-1.5 rounded-full" [style.width.%]="(item.lastPageIndex + 1) / item.totalPages * 100"></div>
+                </div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h3 class="text-sm font-semibold text-white truncate group-hover:text-indigo-400 transition-colors">{{ item.mangaTitle }}</h3>
+              <p class="text-xs text-gray-400 truncate">Ch. {{ item.chapterNumber }}: {{ item.chapterTitle }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
   <h2 class="text-3xl font-bold text-white mb-6 border-l-4 border-indigo-500 pl-4">Manga Library</h2>
 
   @if (mangas().length > 0) {

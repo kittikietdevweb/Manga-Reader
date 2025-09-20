@@ -29,3 +29,15 @@ export interface Manga {
   comments: Comment[];
   followers: number;
 }
+
+export interface HistoryItem {
+  mangaId: string;
+  chapterId: string;
+  lastPageIndex: number;
+  timestamp: number;
+  mangaTitle: string;
+  chapterTitle: string;
+  chapterNumber: number;
+  coverUrl: string;
+  totalPages: number;
+}

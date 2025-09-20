@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, signal, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Manga, Chapter } from './models/manga.model';
+import { Manga, Chapter, HistoryItem } from './models/manga.model';
 import { MangaService } from './services/manga.service';
 import { MangaLibraryComponent } from './components/manga-library/manga-library.component';
 import { MangaDetailComponent } from './components/manga-detail/manga-detail.component';
@@ -25,6 +25,9 @@ export class AppComponent {
   mangas = signal<Manga[]>([]);
   selectedManga = signal<Manga | null>(null);
   selectedChapter = signal<Chapter | null>(null);
+  initialPageIndexForReader = signal(0);
+  readHistory = this.mangaService.history;
+
   searchTerm = signal<string>('');
   
   allCategories = signal<string[]>([]);
@@ -81,17 +84,62 @@ export class AppComponent {
   onChapterSelected(data: { manga: Manga; chapter: Chapter }): void {
     this.selectedManga.set(data.manga);
     this.selectedChapter.set(data.chapter);
+    this.initialPageIndexForReader.set(0);
     this.view.set('reader');
+  }
+
+  onHistorySelected(item: HistoryItem): void {
+    const manga = this.mangaService.getMangaById(item.mangaId);
+    if (manga) {
+        const chapter = manga.chapters.find(c => c.id === item.chapterId);
+        if (chapter) {
+            this.selectedManga.set(manga);
+            this.selectedChapter.set(chapter);
+            this.initialPageIndexForReader.set(item.lastPageIndex);
+            this.view.set('reader');
+        }
+    }
   }
 
   onBackToLibrary(): void {
     this.selectedManga.set(null);
     this.selectedChapter.set(null);
+    this.initialPageIndexForReader.set(0);
     this.view.set('library');
   }
 
   onBackToDetail(): void {
     this.selectedChapter.set(null);
+    this.initialPageIndexForReader.set(0);
     this.view.set('detail');
+  }
+
+  onPreviousChapter(): void {
+    const manga = this.selectedManga();
+    const chapter = this.selectedChapter();
+    if (!manga || !chapter) return;
+
+    const currentIndex = manga.chapters.findIndex(c => c.id === chapter.id);
+    if (currentIndex > 0) {
+      this.selectedChapter.set(manga.chapters[currentIndex - 1]);
+      this.initialPageIndexForReader.set(0);
+    }
+  }
+
+  onNextChapter(): void {
+    const manga = this.selectedManga();
+    const chapter = this.selectedChapter();
+    if (!manga || !chapter) return;
+    
+    const currentIndex = manga.chapters.findIndex(c => c.id === chapter.id);
+    if (currentIndex > -1 && currentIndex < manga.chapters.length - 1) {
+      this.selectedChapter.set(manga.chapters[currentIndex + 1]);
+      this.initialPageIndexForReader.set(0);
+    }
+  }
+
+  onChapterChanged(chapter: Chapter): void {
+    this.selectedChapter.set(chapter);
+    this.initialPageIndexForReader.set(0);
   }
 }

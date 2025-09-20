@@ -1,114 +1,129 @@
-<main class="min-h-screen bg-gray-900 text-gray-100 font-sans flex flex-col">
-  <header class="bg-gray-800/50 backdrop-blur-sm sticky top-0 z-50 shadow-lg">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-auto sm:h-16 py-3 sm:py-0 flex-wrap">
-        <div class="flex items-center space-x-3">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.22-6.222h10.44M6.75 12.001a5.25 5.25 0 0110.5 0 5.25 5.25 0 01-10.5 0z" />
-          </svg>
-          <h1 class="text-2xl font-bold tracking-tight text-white">Manga Reader</h1>
-        </div>
-        
-        @if (view() === 'library') {
-          <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto mt-4 sm:mt-0">
-            <div class="relative w-full sm:w-auto">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                </svg>
-              </span>
-              <input 
-                #searchInput
-                type="text" 
-                placeholder="Search manga..."
-                [value]="searchTerm()"
-                (input)="onSearchChanged(searchInput.value)"
-                class="w-full sm:w-52 pl-10 pr-4 py-2 border border-transparent rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300" />
-            </div>
-            <div class="relative w-full sm:w-auto">
-              <select 
-                #categorySelect
-                (change)="onCategorySelected(categorySelect.value)"
-                [value]="selectedCategory()"
-                class="appearance-none w-full sm:w-40 pl-3 pr-10 py-2 border border-transparent rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 cursor-pointer">
-                @for(category of allCategories(); track category) {
-                  <option [value]="category">{{ category === 'all' ? 'All Categories' : category }}</option>
-                }
-              </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+@if (view() !== 'reader') {
+  <main class="min-h-screen bg-gray-900 text-gray-100 font-sans flex flex-col">
+    <header class="bg-gray-800/50 backdrop-blur-sm sticky top-0 z-50 shadow-lg">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-auto sm:h-16 py-3 sm:py-0 flex-wrap">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8" />
+            </svg>
+            <h1 class="text-2xl font-bold tracking-tight text-white">Manga Reader</h1>
+          </div>
+          
+          @if (view() === 'library') {
+            <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto mt-4 sm:mt-0">
+              <div class="relative w-full sm:w-auto">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                <input 
+                  #searchInput
+                  type="text" 
+                  placeholder="Search manga..."
+                  [value]="searchTerm()"
+                  (input)="onSearchChanged(searchInput.value)"
+                  class="w-full sm:w-52 pl-10 pr-4 py-2 border border-transparent rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300" />
               </div>
+              <div class="relative w-full sm:w-auto">
+                <select 
+                  #categorySelect
+                  (change)="onCategorySelected(categorySelect.value)"
+                  [value]="selectedCategory()"
+                  class="appearance-none w-full sm:w-40 pl-3 pr-10 py-2 border border-transparent rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 cursor-pointer">
+                  @for(category of allCategories(); track category) {
+                    <option [value]="category">{{ category === 'all' ? 'All Categories' : category }}</option>
+                  }
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+              </div>
+               <button
+                (click)="toggleShowBookmarks()"
+                [class.bg-indigo-600]="showBookmarksOnly()"
+                [class.text-white]="showBookmarksOnly()"
+                [class.bg-gray-700]="!showBookmarksOnly()"
+                [class.hover:bg-gray-600]="!showBookmarksOnly()"
+                class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-3.13L5 18V4z" />
+                </svg>
+                <span>My Bookmarks</span>
+              </button>
             </div>
-             <button
-              (click)="toggleShowBookmarks()"
-              [class.bg-indigo-600]="showBookmarksOnly()"
-              [class.text-white]="showBookmarksOnly()"
-              [class.bg-gray-700]="!showBookmarksOnly()"
-              [class.hover:bg-gray-600]="!showBookmarksOnly()"
-              class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-3.13L5 18V4z" />
-              </svg>
-              <span>My Bookmarks</span>
-            </button>
-          </div>
-        }
+          }
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
-    @switch (view()) {
-      @case ('library') {
-        <app-manga-library 
-          [mangas]="filteredMangas()" 
-          [searchTerm]="searchTerm()"
-          [selectedCategory]="selectedCategory()"
-          (mangaSelected)="onMangaSelected($event)">
-        </app-manga-library>
-      }
-      @case ('detail') {
-        @if (selectedManga(); as manga) {
-          <app-manga-detail [manga]="manga" (chapterSelected)="onChapterSelected($event)" (back)="onBackToLibrary()"></app-manga-detail>
-        } @else {
-          <div class="text-center py-12">
-            <p class="text-lg text-gray-400">No manga selected. Something went wrong.</p>
-            <button (click)="onBackToLibrary()" class="mt-4 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-300">
-              Back to Library
-            </button>
-          </div>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+      @switch (view()) {
+        @case ('library') {
+          <app-manga-library 
+            [mangas]="filteredMangas()" 
+            [searchTerm]="searchTerm()"
+            [selectedCategory]="selectedCategory()"
+            [readHistory]="readHistory()"
+            (mangaSelected)="onMangaSelected($event)"
+            (historySelected)="onHistorySelected($event)">
+          </app-manga-library>
         }
-      }
-      @case ('reader') {
-        @if (selectedManga(); as manga) {
-          @if (selectedChapter(); as chapter) {
-            <app-manga-reader [manga]="manga" [chapter]="chapter" (back)="onBackToDetail()"></app-manga-reader>
+        @case ('detail') {
+          @if (selectedManga(); as manga) {
+            <app-manga-detail [manga]="manga" (chapterSelected)="onChapterSelected($event)" (back)="onBackToLibrary()"></app-manga-detail>
+          } @else {
+            <div class="text-center py-12">
+              <p class="text-lg text-gray-400">No manga selected. Something went wrong.</p>
+              <button (click)="onBackToLibrary()" class="mt-4 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-300">
+                Back to Library
+              </button>
+            </div>
           }
         }
       }
-    }
-  </div>
-
-  <footer class="bg-gray-800/50 border-t border-gray-700 mt-16">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-        <div class="flex items-center space-x-3 justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.22-6.222h10.44M6.75 12.001a5.25 5.25 0 0110.5 0 5.25 5.25 0 01-10.5 0z" />
-          </svg>
-          <span class="text-xl font-bold text-white">Manga Reader</span>
-        </div>
-        <p class="text-gray-400 text-sm">
-          &copy; 2024 Manga Reader. All rights reserved.
-        </p>
-        <div class="flex items-center space-x-4">
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-        </div>
-      </div>
-      <div class="mt-6 pt-6 border-t border-gray-700/50 text-center text-xs text-gray-500">
-        <p>Disclaimer: This is a fictional project for demonstration purposes. All manga content is sourced from placeholders and is not intended for distribution.</p>
-      </div>
     </div>
-  </footer>
-</main>
+
+    <footer class="bg-slate-900 border-t border-slate-700 mt-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <div class="flex items-center space-x-3 justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8" />
+            </svg>
+            <span class="text-xl font-bold text-white">Manga Reader</span>
+          </div>
+          <p class="text-gray-400 text-sm">
+            &copy; 2024 Manga Reader. All rights reserved.
+          </p>
+          <div class="flex items-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+          </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-slate-700 text-center text-xs text-gray-500">
+          <p>Disclaimer: This is a fictional project for demonstration purposes. All manga content is sourced from placeholders and is not intended for distribution.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+} @else {
+  @if (selectedManga(); as manga) {
+    @if (selectedChapter(); as chapter) {
+      <app-manga-reader 
+        [manga]="manga" 
+        [chapter]="chapter" 
+        [initialPageIndex]="initialPageIndexForReader()"
+        (back)="onBackToDetail()"
+        (previousChapter)="onPreviousChapter()"
+        (nextChapter)="onNextChapter()"
+        (chapterChange)="onChapterChanged($event)">
+      </app-manga-reader>
+    }
+  }
+}

@@ -1,10 +1,13 @@
 import { Injectable, signal } from '@angular/core';
-import { Manga, Comment } from '../models/manga.model';
+import { Manga, Comment, Chapter, HistoryItem } from '../models/manga.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MangaService {
+  private readonly HISTORY_KEY = 'mangaReadHistory';
+  private readonly MAX_HISTORY_ITEMS = 20;
+
   private mangaData: Manga[] = [
     {
       id: 'jujutsu-kaisen',
@@ -137,6 +140,66 @@ export class MangaService {
 
   private bookmarkedMangaIds = signal<Set<string>>(new Set());
   bookmarkedIds = this.bookmarkedMangaIds.asReadonly();
+
+  private readHistory = signal<HistoryItem[]>([]);
+  history = this.readHistory.asReadonly();
+
+  constructor() {
+    this.loadHistory();
+  }
+
+  private loadHistory(): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+        const savedHistory = localStorage.getItem(this.HISTORY_KEY);
+        if (savedHistory) {
+            this.readHistory.set(JSON.parse(savedHistory));
+        }
+    }
+  }
+
+  private saveHistory(): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem(this.HISTORY_KEY, JSON.stringify(this.history()));
+    }
+  }
+
+  updateReadHistory(manga: Manga, chapter: Chapter, pageIndex: number): void {
+    this.readHistory.update(history => {
+        const existingIndex = history.findIndex(
+            item => item.mangaId === manga.id && item.chapterId === chapter.id
+        );
+
+        let updatedHistory = [...history];
+
+        if (existingIndex > -1) {
+            const existingItem = updatedHistory.splice(existingIndex, 1)[0];
+            existingItem.lastPageIndex = pageIndex;
+            existingItem.timestamp = Date.now();
+            updatedHistory.unshift(existingItem);
+        } else {
+            const newItem: HistoryItem = {
+                mangaId: manga.id,
+                chapterId: chapter.id,
+                lastPageIndex: pageIndex,
+                timestamp: Date.now(),
+                mangaTitle: manga.title,
+                chapterTitle: chapter.title,
+                chapterNumber: chapter.chapterNumber,
+                coverUrl: manga.coverUrl,
+                totalPages: chapter.pages.length,
+            };
+            updatedHistory.unshift(newItem);
+        }
+
+        if (updatedHistory.length > this.MAX_HISTORY_ITEMS) {
+            updatedHistory = updatedHistory.slice(0, this.MAX_HISTORY_ITEMS);
+        }
+        
+        return updatedHistory;
+    });
+
+    this.saveHistory();
+  }
 
   getMangaSeries(): Manga[] {
     return this.mangaData;
