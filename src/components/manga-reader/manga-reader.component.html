@@ -1,5 +1,8 @@
 
-<section class="animate-fade-in flex flex-col items-center">
+<section 
+  class="animate-fade-in flex flex-col items-center"
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)">
   <div class="w-full bg-gray-800 p-4 rounded-lg shadow-lg mb-4 sticky top-[70px] z-40">
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
       <button (click)="goBack()" class="inline-flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg shadow-md transition-colors duration-300 w-full sm:w-auto">

@@ -8,6 +8,9 @@ import { Manga, Chapter, Page } from '../../models/manga.model';
   templateUrl: './manga-reader.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, NgOptimizedImage],
+  host: {
+    '(window:keydown)': 'handleKeyboardEvent($event)'
+  }
 })
 export class MangaReaderComponent {
   manga = input.required<Manga>();
@@ -28,6 +31,9 @@ export class MangaReaderComponent {
     return ((this.currentPageIndex() + 1) / total) * 100;
   });
 
+  private touchStartX = 0;
+  private readonly swipeThreshold = 50; // Minimum pixels for a swipe
+
   constructor() {
     effect(() => {
         // Reset to first page if chapter changes
@@ -46,5 +52,32 @@ export class MangaReaderComponent {
 
   goBack(): void {
     this.back.emit();
+  }
+
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.key === 'ArrowRight') {
+      this.nextPage();
+    } else if (event.key === 'ArrowLeft') {
+      this.prevPage();
+    }
+  }
+
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartX = event.touches[0].clientX;
+  }
+
+  onTouchEnd(event: TouchEvent): void {
+    const touchEndX = event.changedTouches[0].clientX;
+    const deltaX = touchEndX - this.touchStartX;
+
+    if (Math.abs(deltaX) > this.swipeThreshold) {
+      if (deltaX < 0) {
+        // Swipe Left
+        this.nextPage();
+      } else {
+        // Swipe Right
+        this.prevPage();
+      }
+    }
   }
 }
