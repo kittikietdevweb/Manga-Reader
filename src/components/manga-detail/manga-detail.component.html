@@ -96,7 +96,24 @@
 
       <!-- Comments Section -->
       <div class="mt-12">
-        <h3 class="text-2xl font-semibold text-white mb-4 border-l-4 border-indigo-500 pl-4">Comments</h3>
+        <div class="flex flex-col sm:flex-row justify-between items-baseline gap-4 mb-4">
+          <h3 class="text-2xl font-semibold text-white border-l-4 border-indigo-500 pl-4">Comments</h3>
+          <div class="relative">
+            <label for="comment-sort" class="sr-only">Sort comments</label>
+            <select 
+              id="comment-sort"
+              #sortSelect
+              (change)="onSortOrderChange(sortSelect.value)"
+              [value]="commentSortOrder()"
+              class="appearance-none text-sm pl-3 pr-10 py-2 border border-transparent rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 cursor-pointer">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
+        </div>
         
         <div class="bg-gray-800 rounded-lg shadow-inner p-6 mb-8">
           <h4 class="text-lg font-semibold text-white mb-4">Leave a Comment</h4>
@@ -118,7 +135,7 @@
         </div>
 
         <div class="space-y-6">
-          @for (comment of manga().comments.slice().reverse(); track comment.id) {
+          @for (comment of sortedComments(); track comment.id) {
             <div class="flex space-x-4 animate-fade-in">
               <div class="flex-shrink-0">
                 <div class="h-12 w-12 rounded-full bg-gray-700 flex items-center justify-center">

@@ -18,6 +18,7 @@ export class MangaDetailComponent {
   private mangaService = inject(MangaService);
 
   chapterSearchTerm = signal('');
+  commentSortOrder = signal<'newest' | 'oldest'>('newest');
 
   filteredChapters = computed(() => {
     const term = this.chapterSearchTerm().toLowerCase().trim();
@@ -28,6 +29,14 @@ export class MangaDetailComponent {
       chapter.title.toLowerCase().includes(term) ||
       String(chapter.chapterNumber).includes(term)
     );
+  });
+
+  sortedComments = computed(() => {
+    const comments = [...this.manga().comments];
+    if (this.commentSortOrder() === 'newest') {
+      return comments.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    }
+    return comments.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
   });
 
   isBookmarked = computed(() => {
@@ -51,6 +60,12 @@ export class MangaDetailComponent {
   
   onChapterSearch(term: string): void {
     this.chapterSearchTerm.set(term);
+  }
+
+  onSortOrderChange(order: string): void {
+    if (order === 'newest' || order === 'oldest') {
+      this.commentSortOrder.set(order);
+    }
   }
 
   submitComment(usernameInput: HTMLInputElement, commentInput: HTMLTextAreaElement): void {
