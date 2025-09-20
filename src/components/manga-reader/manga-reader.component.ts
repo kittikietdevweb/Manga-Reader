@@ -43,11 +43,17 @@ export class MangaReaderComponent {
   }
 
   nextPage(): void {
-    this.currentPageIndex.update(index => Math.min(index + 1, this.totalPages() - 1));
+    if (this.currentPageIndex() < this.totalPages() - 1) {
+      this.currentPageIndex.update(index => index + 1);
+      this.scrollToTop();
+    }
   }
 
   prevPage(): void {
-    this.currentPageIndex.update(index => Math.max(index - 1, 0));
+    if (this.currentPageIndex() > 0) {
+      this.currentPageIndex.update(index => index - 1);
+      this.scrollToTop();
+    }
   }
 
   goBack(): void {
@@ -79,5 +85,9 @@ export class MangaReaderComponent {
         this.prevPage();
       }
     }
+  }
+
+  private scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
